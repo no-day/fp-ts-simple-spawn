@@ -15,5 +15,5 @@
     "**/docs/modules/*.ts.md",
     ".vscode"
   ],
-  "words": []
+  "words": ["pmarsceill", "taskify"]
 }

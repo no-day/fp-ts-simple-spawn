@@ -1,12 +1,34 @@
-import * as myLib from '../src'
-import * as fc from 'fast-check'
+import * as $ from '../src'
+import { pipe } from 'fp-ts/lib/function'
+import * as E from 'fp-ts/Either'
+import * as T from 'fp-ts/Task'
 
-describe('greet', () => {
-  it('greets anything', () => {
-    fc.assert(
-      fc.property(fc.string(), (name) => {
-        expect(myLib.greet(name)).toBe(`Hello, ${name}!`)
-      })
-    )
-  })
+describe('spawn', () => {
+  it('prints to stdout', () =>
+    pipe(
+      $.spawn('echo', ['one', 'two']),
+      T.map((result) =>
+        expect(result).toStrictEqual(
+          E.right({
+            stdout: 'one two\n',
+            stderr: '',
+          })
+        )
+      ),
+      (p) => p()
+    ))
+
+  it('throws with unknown command', () =>
+    pipe(
+      $.spawn('somethingUnknown', ['one', 'two']),
+      T.map((result) =>
+        expect(result).toMatchObject(
+          E.left({
+            _tag: 'CommandNotFoundError',
+            command: 'somethingUnknown',
+          })
+        )
+      ),
+      (p) => p()
+    ))
 })

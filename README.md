@@ -1,8 +1,11 @@
-# ts-simple-spawn
+# fp-ts-simple-spawn
 
-[![Test](https:&#x2F;&#x2F;github.com&#x2F;no-day&#x2F;ts-simple-spawn&#x2F;actions&#x2F;workflows&#x2F;build.yml&#x2F;badge.svg)](https:&#x2F;&#x2F;github.com&#x2F;no-day&#x2F;ts-simple-spawn&#x2F;actions&#x2F;workflows&#x2F;build.yml)
+[![Test](https://github.com/no-day/fp-ts-simple-spawn/actions/workflows/build.yml/badge.svg)](https://github.com/no-day/fp-ts-simple-spawn/actions/workflows/build.yml)
 
-[API Docs](https://no-day.github.io/ts-simple-spawn)
+[API Docs](https://no-day.github.io/fp-ts-simple-spawn)
+
+Node's `spawn` without streams. Just a plain `TaskEither`.  
+`stdin`, `stdout`, `stderr` are treated as strings.
 
 ---
 
@@ -18,19 +21,19 @@
 Uses `fp-ts` as a peer dependency.
 
 ```bash
-yarn add fp-ts ts-simple-spawn
+yarn add fp-ts fp-ts-simple-spawn
 ```
 
 or
 
 ```bash
-npm install fp-ts ts-simple-spawn
+npm install fp-ts fp-ts-simple-spawn
 ```
 
 ## Example
 
 ```ts
-import * as Lib from 'ts-simple-spawn'
+import * as Lib from 'fp-ts-simple-spawn'
 
 // write an example...
 ```
