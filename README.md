@@ -6,12 +6,13 @@
 
 Node's `spawn` without streams. Just a plain `TaskEither`.  
 `stdin`, `stdout`, `stderr` are treated as strings.
+Captures common errors in a union type.
 
 ---
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC) -->
+
 - [Install](#install)
-- [Example](#example)
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 ## Install
@@ -26,12 +27,4 @@ or
 
 ```bash
 npm install fp-ts fp-ts-simple-spawn
-```
-
-## Example
-
-```ts
-import * as Lib from 'fp-ts-simple-spawn'
-
-// write an example...
 ```
