@@ -1,7 +1,7 @@
 {
   "name": "fp-ts-simple-spawn",
   "homepage": "https://github.com/no-day/fp-ts-simple-spawn",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "peerDependencies": {
     "fp-ts": "^2.9.5"
