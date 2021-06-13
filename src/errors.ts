@@ -56,26 +56,25 @@ type Ctor<T> = (opts: OmitTag<T>) => T
  * @since 1.0.0
  * @category Errors
  */
-export interface TerminationError
-  extends _stdout,
-    _stderr,
-    _exitCode,
-    Tag<'TerminationError'> {}
+export interface ExitCodeError extends _stdout, _stderr, Tag<'ExitCodeError'> {
+  exitCode: number
+}
 
 /**
  * @since 1.0.0
  * @category Errors
  */
-export interface CancellationError
-  extends _stdout,
-    _stderr,
-    Tag<'CancellationError'> {}
+export interface SignalError extends _stdout, _stderr, Tag<'SignalError'> {
+  signal: NodeJS.Signals
+}
 
 /**
  * @since 1.0.0
  * @category Errors
  */
-export interface ExecutionError extends _nativeError, Tag<'ExecutionError'> {}
+export interface UnknownSpawnError
+  extends _nativeError,
+    Tag<'UnknownSpawnError'> {}
 
 /**
  * @since 1.0.0
@@ -95,20 +94,20 @@ export interface CommandNotFoundError
  * @since 1.0.0
  * @category Constructors
  */
-export const terminationError: Ctor<TerminationError> = tag('TerminationError')
+export const exitCodeError: Ctor<ExitCodeError> = tag('ExitCodeError')
 
 /**
  * @since 1.0.0
  * @category Constructors
  */
-export const cancellationError: Ctor<CancellationError> =
-  tag('CancellationError')
+export const signalError: Ctor<SignalError> = tag('SignalError')
 
 /**
  * @since 1.0.0
  * @category Constructors
  */
-export const executionError: Ctor<ExecutionError> = tag('ExecutionError')
+export const unknownSpawnError: Ctor<UnknownSpawnError> =
+  tag('UnknownSpawnError')
 
 /**
  * @since 1.0.0

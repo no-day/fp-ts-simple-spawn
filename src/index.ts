@@ -2,18 +2,17 @@
 
 import * as cp from 'child_process'
 import * as TE from 'fp-ts/TaskEither'
-import * as O from 'fp-ts/Option'
 import { TaskEither } from 'fp-ts/TaskEither'
 import * as IMP from './impl'
-import { pipe } from 'fp-ts/lib/function'
+import { absurd, pipe } from 'fp-ts/lib/function'
 import {
-  CancellationError,
+  SignalError,
   CommandNotFoundError,
-  ExecutionError,
-  executionError,
-  cancellationError,
-  terminationError,
-  TerminationError,
+  UnknownSpawnError,
+  unknownSpawnError,
+  signalError,
+  exitCodeError,
+  ExitCodeError,
   commandNotFoundError,
 } from './errors'
 
@@ -35,13 +34,13 @@ export interface Options extends Omit<cp.SpawnOptions, 'stdio'> {
 
 const matchNativeError = (
   nativeError: NodeJS.ErrnoException
-): CommandNotFoundError | ExecutionError =>
+): CommandNotFoundError | UnknownSpawnError =>
   nativeError.code === 'ENOENT'
     ? commandNotFoundError({
         nativeError,
         command: nativeError.path || '',
       })
-    : executionError({ nativeError })
+    : unknownSpawnError({ nativeError })
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -56,21 +55,18 @@ export const spawnWithExitCode: (
   args?: string[],
   options?: Options
 ) => TaskEither<
-  CommandNotFoundError | CancellationError | ExecutionError,
+  UnknownSpawnError | CommandNotFoundError | SignalError,
   { stdout: string; stderr: string; exitCode: number }
 > = (command, args = [], options = {}) =>
   pipe(
     TE.taskify(IMP.simpleSpawn)(command, args, options),
     TE.mapLeft(matchNativeError),
-    TE.chainW(({ exitCode, stderr, stdout }) =>
-      pipe(
-        exitCode,
-        O.fromNullable,
-        O.match(
-          () => TE.throwError(cancellationError({ stderr, stdout })),
-          (n) => TE.of({ exitCode: n, stderr, stdout })
-        )
-      )
+    TE.chainW(({ signal, exitCode, stderr, stdout }) =>
+      signal !== null
+        ? TE.throwError(signalError({ stderr, stdout, signal }))
+        : exitCode !== null
+        ? TE.of({ stderr, stdout, exitCode })
+        : absurd<ReturnType<typeof spawnWithExitCode>>(null as never)
     )
   )
 
@@ -83,7 +79,7 @@ export const spawn: (
   args?: string[],
   options?: Options
 ) => TaskEither<
-  CommandNotFoundError | CancellationError | ExecutionError | TerminationError,
+  UnknownSpawnError | CommandNotFoundError | SignalError | ExitCodeError,
   { stdout: string; stderr: string }
 > = (command, args = [], options = {}) =>
   pipe(
@@ -91,6 +87,6 @@ export const spawn: (
     TE.chainW(({ exitCode, stdout, stderr }) =>
       exitCode === 0
         ? TE.of({ stdout, stderr })
-        : TE.throwError(terminationError({ exitCode, stdout, stderr }))
+        : TE.throwError(exitCodeError({ exitCode, stdout, stderr }))
     )
   )

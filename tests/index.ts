@@ -6,7 +6,7 @@ import * as T from 'fp-ts/Task'
 describe('spawn', () => {
   it('prints to stdout', () =>
     pipe(
-      $.spawn('echo', ['one', 'two']),
+      $.spawn('yarn', ['-v']),
       T.map((result) =>
         expect(result).toStrictEqual(
           E.right({

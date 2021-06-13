@@ -27,8 +27,8 @@ export const simpleSpawn: {
 
     proc.on('error', callback)
 
-    proc.on('exit', (exitCode) =>
-      callback(null, { exitCode: exitCode, stdout, stderr })
+    proc.on('exit', (exitCode, signal) =>
+      callback(null, { exitCode, signal, stdout, stderr })
     )
   } catch (e) {
     callback(e)
@@ -39,6 +39,7 @@ export type Result = {
   stdout: string
   stderr: string
   exitCode: number | null
+  signal: NodeJS.Signals | null
 }
 
 export type Options = Omit<cp.SpawnOptions, 'stdio'> & { stdin?: string }
