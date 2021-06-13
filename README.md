@@ -10,10 +10,8 @@ Node's `spawn` without streams. Just a plain `TaskEither`.
 ---
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC) -->
-
 - [Install](#install)
 - [Example](#example)
-
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 ## Install
