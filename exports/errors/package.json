@@ -1,3 +1,5 @@
 {
-  "main": "../_lib/errors.js"
+  "main": "../lib/errors.js",
+  "module": "../es6/errors.js",
+  "typings": "../es6/errors.d.ts"
 }

@@ -1,3 +1,5 @@
 {
-  "main": "_lib/index.js"
+  "main": "./lib/index.js",
+  "module": "./es6/index.js",
+  "typings": "./es6/index.d.ts"
 }
