@@ -24,7 +24,7 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "build": "rm -rf dist; cp -r exports dist; tsc -p tsconfig.build.json; tsc -p tsconfig.build-es6.json;",
+    "build": "rm -rf dist; cp -r exports dist; cp package.json dist; tsc -p tsconfig.build.json; tsc -p tsconfig.build-es6.json;",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "prepublish": "yarn run build",
     "pretty": "yarn run prettier --check .",
