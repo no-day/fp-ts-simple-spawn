@@ -1,6 +1,6 @@
 {
   "name": "fp-ts-simple-spawn",
-  "homepage": "http://",
+  "homepage": "https://github.com/no-day/fp-ts-simple-spawn",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
